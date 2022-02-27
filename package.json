@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "name": "11ty-aws",
+  "description": "11ty + Alpine + Tailwind on AWS",
+  "homepage": "https://11ty-aws.corysilva.com/",
+  "author": "Cory Silva",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coryasilva/11ty-aws.com"
+  },
+  "config": {
+    "css_in": "src/_styles/_main.pcss",
+    "css_out": "dist/assets/main.bundle.css",
+    "js_in": "src/_scripts/_main.js",
+    "js_out": "dist/assets/main.bundle.js"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production npm-run-all -l clean lint -p build:*",
+    "build:html": "ELEVENTY_PRODUCTION=true npx eleventy",
+    "build:css": "tailwindcss -i $npm_package_config_css_in -o $npm_package_config_css_out --minify --postcss",
+    "build:js": "esbuild $npm_package_config_js_in --outfile=$npm_package_config_js_out --bundle --minify",
+    "build:test": "npx jest --coverage",
+    "clean": "npx rimraf ./dist",
+    "dev": "cross-env NODE_ENV=development npm-run-all -l clean -p dev:* -r",
+    "dev:html": "npx eleventy --quiet --serve",
+    "dev:css": "tailwindcss -i $npm_package_config_css_in -o $npm_package_config_css_out --watch --postcss",
+    "dev:js": "esbuild $npm_package_config_js_in --outfile=$npm_package_config_js_out --bundle --watch",
+    "dev:test": "npx jest --watch",
+    "lint": "npx eslint .",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "alpinejs": "^3.7.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0",
+    "autoprefixer": "^10.4.2",
+    "classnames": "^2.3.1",
+    "common-tags": "^1.8.2",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.14.9",
+    "esbuild-jest": "^0.5.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "html-minifier": "^4.0.0",
+    "jest": "^27.4.5",
+    "npm-run-all": "^4.1.5",
+    "postcss-import": "^14.0.2",
+    "prop-types": "^15.8.1",
+    "rimraf": "^3.0.2",
+    "tailwindcss": "^3.0.0"
+  }
+}
