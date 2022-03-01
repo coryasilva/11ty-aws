@@ -2,7 +2,9 @@
 
 11ty + Alpine + Tailwind on AWS.
 
-This is full stack javascript with very little context switching. Yes, using netlify is much eaiser and requires far less code, but some enterprises will not want to use netilfy. Also nontrivial sites will quickly need to have some apis -- this stack uses cloudfront and a unified ingress.
+Full stack javascript with very little context switching.
+
+Yes, using Netlify is much eaiser and requires far less code, but some enterprises will not want to use Netilfy. Also, nontrivial sites will quickly need to have some APIs -- this stack uses cloudfront as an unified ingress for both the static site and the API Gateway.
 
 ## Getting Started
 
