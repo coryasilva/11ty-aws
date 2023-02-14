@@ -1,5 +1,5 @@
 const { string, oneOf } = require('prop-types')
-const classNames = require('classnames')
+const clsx = require('clsx')
 const { html } = require('common-tags')
 const { withPropTypeChecks } = require('../_utils')
 const Container = require('./container.js')
@@ -12,7 +12,7 @@ PageTitle.propTypes = {
 
 function PageTitle (props) {
   const { title, subtitle, align = 'left' } = props
-  const alignClass = classNames({
+  const alignClass = clsx({
     'text-left': align === 'left',
     'text-center': align === 'center',
     'text-right': align === 'right'

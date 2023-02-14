@@ -11,14 +11,10 @@ import {
   aws_cloudfront_origins as origins,
   aws_iam as iam,
   aws_lambda as lambda,
-  aws_lambda_destinations as destinations,
   aws_lambda_nodejs as nodejs,
   aws_route53 as route53,
   aws_route53_targets as targets,
-  aws_sns as sns,
-  aws_sqs as sqs,
   aws_s3 as s3,
-  aws_s3_deployment as deployment,
   aws_wafv2 as wafv2,
 } from 'aws-cdk-lib'
 
@@ -30,7 +26,9 @@ export interface StaticSiteProps extends StackProps {
   wafEnabled: boolean,
 }
 export class StaticSiteStack extends Stack {
-  public readonly bucket: s3.Bucket;
+  public readonly bucket: s3.Bucket
+  public readonly distribution: cloudfront.Distribution
+
   constructor(scope: Construct, id: string, props: StaticSiteProps) {
     super(scope, id, props)
 
@@ -131,6 +129,7 @@ export class StaticSiteStack extends Stack {
     // Create a bucket for static content.
     const staticBucket = new s3.Bucket(this, 'staticBucket', {
       encryption: s3.BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
       lifecycleRules: [
         { abortIncompleteMultipartUploadAfter: Duration.days(2) },
         { noncurrentVersionExpiration: Duration.days(90) },
@@ -256,6 +255,7 @@ export class StaticSiteStack extends Stack {
         responsePagePath: '/404.html',
       }],
     })
+    this.distribution = staticDistribution
 
     // Create A record for website
     const domainNameDnsRecord = new route53.ARecord(this, 'websiteAliasRecord', {

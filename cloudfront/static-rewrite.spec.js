@@ -3,7 +3,7 @@ import { awsCloudfrontTestFunction } from './test-objects/aws-test-util'
 const functionName = 'GeoSyntaxComStaticRewrite'
 
 describe('Static rewrite cloudfront function', () => {
-  jest.setTimeout(15000)
+  jest.setTimeout(30000)
   it('should not change /api/contact.json', async () => {
     const test = await awsCloudfrontTestFunction(functionName, 'rewrite-api-contact-file.json')
     expect(test.output.request.uri).toMatch(test.object.request.uri)

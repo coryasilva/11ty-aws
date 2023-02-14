@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import { App } from 'aws-cdk-lib';
-import { StaticSiteStack } from '../lib/static-site-stack';
-import { StaticSiteDeploy } from '../lib/static-site-deploy';
+import 'source-map-support/register'
+import { App } from 'aws-cdk-lib'
+import { StaticSiteStack } from '../lib/static-site-stack'
+import { StaticSiteDeploy } from '../lib/static-site-deploy'
 
-const app = new App();
-const infra = new StaticSiteStack(app, 'StaticSiteInfra', {
+const app = new App()
+const {bucket, distribution} = new StaticSiteStack(app, 'StaticSiteInfra', {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
@@ -20,12 +20,13 @@ const infra = new StaticSiteStack(app, 'StaticSiteInfra', {
   apexAlias: false,
   // if true, this will configure an AWS managed WAF on your cloudfront distro. THIS WILL COST MONEY -- IT IS NOT FREE TIER ELIGIBLE
   wafEnabled: false,
-});
+})
 
-const deploy = new StaticSiteDeploy(app, 'StaticSiteDeploy', {
+new StaticSiteDeploy(app, 'StaticSiteDeploy', {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
-  bucket: infra.bucket,
+  bucket,
+  distribution,
 })

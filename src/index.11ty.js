@@ -24,10 +24,9 @@ class Index {
               <ul class="text-right">
                 <li>Tailwind CSS</li>
                 <li>Alpine JS</li>
-                <li>VanillaJS components</li>
                 <li>Template literals</li>
                 <li>prop-types</li>
-                <li>classnames</li>
+                <li>clsx</li>
               </ul>
             </div>
             <div class="text-4xl shrink px-5 font-light">+</div>

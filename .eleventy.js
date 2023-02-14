@@ -1,10 +1,6 @@
 const htmlmin = require('html-minifier')
 
 module.exports = function (config) {
-  config.setBrowserSyncConfig({
-    files: ['dist/**/*'],
-    open: true,
-  })
   config.addPassthroughCopy({ 'public': './' })
 
   config.addTransform('htmlmin', function (content, outputPath) {

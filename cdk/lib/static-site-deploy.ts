@@ -1,15 +1,16 @@
 import * as path from 'path'
 import { Construct } from 'constructs'
 import {
-  Duration,
   Stack,
   StackProps,
+  aws_cloudfront as cloudfront,
   aws_s3 as s3,
   aws_s3_deployment as deployment,
 } from 'aws-cdk-lib'
 
 export interface StaticDeployProps extends StackProps {
   bucket: s3.Bucket,
+  distribution: cloudfront.Distribution,
 }
 
 export class StaticSiteDeploy extends Stack {
@@ -21,11 +22,8 @@ export class StaticSiteDeploy extends Stack {
       sources: [deployment.Source.asset(path.join(__dirname, '../../dist'))],
       destinationKeyPrefix: '/',
       destinationBucket: props.bucket,
-      cacheControl: [
-        deployment.CacheControl.maxAge(Duration.seconds(0)),
-        deployment.CacheControl.mustRevalidate(),
-        deployment.CacheControl.setPublic(),
-      ],
+      distribution: props.distribution,
+      distributionPaths: ['/*'],
     })
 
   }
