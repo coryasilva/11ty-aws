@@ -9,8 +9,8 @@ import {
 } from 'aws-cdk-lib'
 
 export interface StaticDeployProps extends StackProps {
-  bucket: s3.Bucket,
-  distribution: cloudfront.Distribution,
+  bucket: s3.IBucket,
+  distribution: cloudfront.IDistribution,
 }
 
 export class StaticSiteDeploy extends Stack {

@@ -16,6 +16,7 @@ import {
   aws_route53_targets as targets,
   aws_s3 as s3,
   aws_wafv2 as wafv2,
+  aws_secretsmanager as secretsmanager,
 } from 'aws-cdk-lib'
 
 export interface StaticSiteProps extends StackProps {
@@ -34,7 +35,7 @@ export class StaticSiteStack extends Stack {
 
     const apiDefaultHandler = new nodejs.NodejsFunction(this, 'apiDefaultHandler', {
       functionName: `${id}ApiDefault`,
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_LATEST,
       handler: 'get',
       entry: path.join(__dirname, '../../api/default/index.js'),
       memorySize: 128,
@@ -48,7 +49,47 @@ export class StaticSiteStack extends Stack {
 
     // /api
     const apiRoute = apiGateway.root.addResource('api')
-    apiRoute.addMethod('GET', new apigateway.LambdaIntegration(apiDefaultHandler))
+    const apiRouteDefaultGet = apiRoute.addMethod(
+      'GET',
+      new apigateway.LambdaIntegration(apiDefaultHandler),
+      { apiKeyRequired: true }
+    )
+
+    const usagePlan = apiGateway.addUsagePlan('UsagePlanLow', {
+      name: 'Low',
+      throttle: {
+        rateLimit: 4,
+        burstLimit: 2
+      },
+      quota: {
+        limit: 10,
+        offset: 0,
+        period: apigateway.Period.DAY
+      },
+      apiStages: [{
+        stage: apiGateway.deploymentStage,
+        throttle: [{
+          method: apiRouteDefaultGet,
+          throttle: {
+            rateLimit: 4,
+            burstLimit: 2
+          }
+        }]
+      }]
+    })
+
+    const apiKeySecret = new secretsmanager.Secret(this, 'cf-api-key-secret', {
+      generateSecretString: {
+        passwordLength: 32,
+        excludePunctuation: true,
+      }
+    })
+
+    const apiKey = new apigateway.ApiKey(this, 'cf-api-key', {
+      value: apiKeySecret.secretValue.toString()
+    })
+
+    usagePlan.addApiKey(apiKey)
 
     // Cloudfront Function to rewrite paths and do redirects
     const staticRewriteFunction = new cloudfront.Function(this, 'staticRewrite', {
@@ -224,7 +265,7 @@ export class StaticSiteStack extends Stack {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
       webAclId: props.wafEnabled === true ? waf?.attrArn : undefined,
       httpVersion: cloudfront.HttpVersion.HTTP2,
-      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
       certificate: cert,
       domainNames: [ props.domainName ].concat(props.subjectAlternativeNames),
       defaultBehavior: {
@@ -241,9 +282,13 @@ export class StaticSiteStack extends Stack {
       additionalBehaviors: {
         'api/*': {
           origin: new origins.HttpOrigin(`${apiGateway.restApiId}.execute-api.${this.region}.${this.urlSuffix}`, {
+            customHeaders: {
+              'x-api-key': apiKeySecret.secretValue.toString(),
+            },
             originPath: '/' + apiGateway.deploymentStage.stageName
           }),
           responseHeadersPolicy: apiResponseHeadersPolicy,
+          originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
