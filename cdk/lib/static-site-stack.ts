@@ -18,6 +18,7 @@ import {
   aws_wafv2 as wafv2,
   aws_secretsmanager as secretsmanager,
 } from 'aws-cdk-lib'
+import { readFileSync } from 'fs'
 
 export interface StaticSiteProps extends StackProps {
   hostedZoneDomainName: string,
@@ -91,12 +92,23 @@ export class StaticSiteStack extends Stack {
 
     usagePlan.addApiKey(apiKey)
 
+    // Cloudfront Key Value store for redirects
+    const redirectKvStore = new cloudfront.KeyValueStore(this, "keyValueStore", {
+      keyValueStoreName: `${id}Redirects`,
+    });
+
+    // Inject KV store id into function code
+    const staticRewriteFunctionCode = readFileSync(
+      path.join(__dirname, '../../cloudfront/static-rewrite.js'), 'utf8'
+    )
+    .replace('KEY_VALUE_STORE_ID_PLACEHOLDER', redirectKvStore.keyValueStoreId,);
+
     // Cloudfront Function to rewrite paths and do redirects
     const staticRewriteFunction = new cloudfront.Function(this, 'staticRewrite', {
       functionName: `${id}StaticRewrite`,
-      code: cloudfront.FunctionCode.fromFile({
-        filePath: path.join(__dirname, '../../cloudfront/static-rewrite.js'),
-      }),
+      code: cloudfront.FunctionCode.fromInline(staticRewriteFunctionCode),
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+      keyValueStore: redirectKvStore,
     })
 
     // Optional WAF ~$9 a month

@@ -1,6 +1,6 @@
 # Cloudfront function
 
-This runs in a very curated runtime; please review the [JS requirements](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-javascript-runtime-features.html).
+This runs in a very curated runtime; please review the [JS requirements](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-javascript-runtime-20.html).
 
 *Not to be confused with Lambda@Edge functions which cost 6x more money and 2x more latency.*
 

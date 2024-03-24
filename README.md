@@ -88,12 +88,9 @@ NOTE: Domain name config is repeated in a few spots:
 
 ## Todo
 
-- Consolidate site domain name configs if possible
-- Serverless
-  - Lambda data processor --> kinesis data stream --> lambda builder --> s3
-  - Could get expensive but follows the ssg ethos.
-- Ditch AlpineJS for ???
-  - I do not like the CSP unsafe-eval
+- Add Serverless
+- Add Cloudfront Logging
+- Fix CDK and Cloudfront Func tests
 
 ## Flow Diagram
 

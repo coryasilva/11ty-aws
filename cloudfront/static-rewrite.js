@@ -1,38 +1,37 @@
-var redirectMap = {
-  // '/lowercase/with/slash/': ['/lower/case/with/slash/', 301 ],
-}
+import cf from 'cloudfront';
+const kvsId = 'KEY_VALUE_STORE_ID_PLACEHOLDER'; // Injected at CDK build time.
+const kvs = cf.kvs(kvsId);
 
 // This should be the canonical domain name. ex: www.mysite.com
-var canonicalHost = '11ty-aws.corysilva.com'
+const canonicalHost = '11ty-aws.corysilva.com';
 // This could be the naked apex. ex: mysite.com
-var redirectHost = 'corysilva.com'
+const redirectHost = 'corysilva.com';
 
 function isHost(headers, host) {
-  if (headers['host'] && headers['host'].value === host) {
+  if (headers.host && headers.host.value === host) {
     return true;
   }
-  if (headers['host'] && headers['host'].multiValue) {
-    return headers['host'].multiValue.some(entry => entry.value === host);
+  if (headers.host && headers.host.multiValue) {
+    return headers.host.multiValue.some(entry => entry.value === host);
   }
   return false;
 }
 
 function isCloudFrontHost(headers) {
-  if (headers['host'] && headers['host'].value.includes('cloudfront')) {
+  if (headers.host && headers.host.value.includes('cloudfront')) {
     return true;
   }
-  else if (headers['host'] && headers['host'].multiValue) {
-    return headers['host'].multiValue.some(entry => entry.value.includes('cloudfront'));
+  else if (headers.host && headers.host.multiValue) {
+    return headers.host.multiValue.some(entry => entry.value.includes('cloudfront'));
   }
   return false;
 }
 
-function handler(event) {
-  var clientIP = event.viewer.ip;
-  var request = event.request;
-  var headers = request.headers || {}
-  var uri = request.uri;
-  var uriHasPeriod = uri.includes('.');
+async function handler(event) {
+  const request = event.request;
+  const headers = request.headers || {}
+  const uriOrig = request.uri;
+  const uriHasPeriod = uri.includes('.');
 
   // Do not allow access via default cloudfront hostname
   if (isCloudFrontHost(headers)) {
@@ -57,29 +56,31 @@ function handler(event) {
     }
   }
 
-  // Add the true-client-ip header to the incoming request
-  request.headers['x-real-client-ip'] = { value: clientIP };
-
   // Do not modify requests to api (file extension okay here)
-  if (uri.startsWith('/api/') || uri === '/api') {
+  if (uriOrig.startsWith('/api/') || uriOrig === '/api') {
     return request;
   }
 
   // Normalize uri to ending slash (if not a file)
-  if (!uriHasPeriod && !uri.endsWith('/')) {
+  if (!uriHasPeriod && !uriOrig.endsWith('/')) {
     request.uri += '/';
   }
 
-  // Redirect if exists in map
-  var redirect = redirectMap[uri];
-  if (redirect && redirect.length === 2) {
-    return {
-      statusCode: redirect[1],
-      statusDescription: 'Found',
-      headers: {
-        'location': { 'value': redirect[0] }
-      }
-    };
+  // Redirect if exists in kv
+  if (request.uri !== '/') {
+    try {
+      const redirect = await kvs.get(request.uri);
+      console.log(`Redirect found: ${request.uri} -> ${redirect}`);
+      return {
+        statusCode: '301',
+        statusDescription: 'Found',
+        headers: {
+          location: { value: redirect }
+        }
+      };
+    } catch (error) {
+      console.log(`Error when fetching key ${request.uri}: ${error}`);
+    }
   }
 
   if (!uriHasPeriod) {

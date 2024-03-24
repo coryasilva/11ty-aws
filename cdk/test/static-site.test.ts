@@ -7,12 +7,10 @@ const mockProps = {
     region: 'us-east-1',
   },
   hostedZoneDomainName: 'domain.local',
-  hostedZoneId: '123',
   domainName: 'www.domain.local',
   subjectAlternativeNames: ['domain.local'],
-  apexRedirect: true,
+  apexAlias: true,
   wafEnabled: false,
-  contactFormSubscriptionEmail: 'me@local',
 }
 
 const app = new cdk.App()
