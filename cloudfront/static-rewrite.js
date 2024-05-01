@@ -31,7 +31,7 @@ async function handler(event) {
   const request = event.request;
   const headers = request.headers || {}
   const uriOrig = request.uri;
-  const uriHasPeriod = uri.includes('.');
+  const uriHasPeriod = uriOrig.includes('.');
 
   // Do not allow access via default cloudfront hostname
   if (isCloudFrontHost(headers)) {
