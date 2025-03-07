@@ -1,11 +1,8 @@
 import { Construct } from 'constructs';
 
-import { Domain } from './domain';
 import { AccessLogFormat, ApiKey, IResource, LogGroupLogDestination, MockIntegration, PassthroughBehavior, Period, RestApi, UsagePlan } from 'aws-cdk-lib/aws-apigateway';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
-
-export interface ApiProps { }
 
 export class Api extends Construct {
   restApi: RestApi;
@@ -16,7 +13,7 @@ export class Api extends Construct {
   apiKeySecret: Secret
   apiKey: ApiKey
 
-  constructor(scope: Construct, id: string, props?: ApiProps) {
+  constructor(scope: Construct, id: string) {
     super(scope, id);
     this.logGroup = this.createLogGroup();
     this.restApi = this.createRestApi();
