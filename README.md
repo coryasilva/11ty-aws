@@ -10,10 +10,8 @@ Yes, using Netlify is much eaiser and requires far less code, but some enterpris
 
 1. Configure your `awscli`
 2. Update file `cdk/bin/static-site.ts`
-3. Update domain name(s) in `cloudfront/static-rewrite.js`
-4. `cd cdk && npm run cdk deploy StaticSiteInfra`
-5. `npm run build`
-6. `cd cdk && npm run cdk deploy StaticSiteDeploy`
+3. `npm run build`
+3. `cd cdk && npm run cdk deploy StaticSite`
 
 ### 11ty commands
 
@@ -41,9 +39,7 @@ npm run watch
 # perform the jest unit tests
 npm run test
 # deploy this stack to your default AWS account/region
-npm run cdk deploy staticSiteInfra
-# deploy 11ty dist code to bucket
-npm run cdk deploy staticSiteDeploy
+npm run cdk deploy staticSite
 # compare deployed stack with current state
 npm run cdk diff
 # emits the synthesized CloudFormation template
@@ -54,19 +50,16 @@ npm run cdk synth
 
 Mono-repo directory structure.
 
-NOTE: Domain name config is repeated in a few spots:
+NOTE: Domain name config is repeated in a couple spots:
 - cdk/bin/static-site.ts
-- cloudfront/static-rewrite.js
 - src/_data/site.js
 
 ```sh
 .
-├── api # AWS Lambda handlers for api
 ├── cdk # AWS CDK stack for cloudfront and api
 │   ├── bin # Cloudformation stack configuration
+│   ├── cloudfront # AWS Cloudfront functions
 │   ├── lib # Cloudformation stack
-├── cloudfront # AWS Cloudfront functions
-│   ├── test-objects # json test cases for aws
 ├── dist # Output directory of final built site
 ├── public # Assets simply copied to the root of dist
 ├── src # Website source
@@ -89,8 +82,6 @@ NOTE: Domain name config is repeated in a few spots:
 ## Todo
 
 - Add Serverless
-- Add Cloudfront Logging
-- Fix CDK and Cloudfront Func tests
 
 ## Flow Diagram
 
