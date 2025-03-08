@@ -22,4 +22,3 @@ export function NavItem (props) {
     </a>
   `
 }
-

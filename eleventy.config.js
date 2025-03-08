@@ -1,8 +1,8 @@
 import htmlmin from 'html-minifier'
-import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import { eleventyImageTransformPlugin } from '@11ty/eleventy-img'
 
 export default function (config) {
-  config.addPassthroughCopy({ 'public': './' })
+  config.addPassthroughCopy({ public: './' })
 
   config.addPlugin(eleventyImageTransformPlugin)
 
@@ -12,7 +12,7 @@ export default function (config) {
       outputPath &&
       outputPath.endsWith('.html')
     ) {
-      let minified = htmlmin.minify(content, {
+      const minified = htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true,
@@ -27,5 +27,5 @@ export default function (config) {
       input: 'src',
       output: 'dist',
     },
-  };
+  }
 }
