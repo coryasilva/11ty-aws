@@ -5,7 +5,7 @@ import { AccessLogFormat, ApiKey, IResource, LogGroupLogDestination, MockIntegra
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 
-export interface ApiProps {}
+export interface ApiProps { }
 
 export class Api extends Construct {
   restApi: RestApi;
@@ -22,7 +22,7 @@ export class Api extends Construct {
     this.restApi = this.createRestApi();
     this.apiResource = this.restApi.root.addResource('api')
     this.mockResource = this.apiResource.addResource('mock')
-    this.addMockResource()
+    this.addMockMethod()
     this.usagePlan = this.createUsagePlan()
     this.apiKeySecret = this.createApiKeySecret()
     this.apiKey = this.createApiKey()
@@ -45,12 +45,14 @@ export class Api extends Construct {
     })
   }
 
-  private addMockResource() {
-    this.mockResource.addMethod('POST', new MockIntegration({
+  private addMockMethod() {
+    return this.mockResource.addMethod('POST', new MockIntegration({
       integrationResponses: [{ statusCode: '200' }],
       passthroughBehavior: PassthroughBehavior.NEVER,
       requestTemplates: { 'application/json': '{"statusCode": 200}' },
-    }))
+    }), {
+      apiKeyRequired: true,
+    })
   }
 
   private createUsagePlan() {
