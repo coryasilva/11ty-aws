@@ -77,7 +77,6 @@ NOTE: Domain name config is repeated in a couple spots:
 ### Suggested VSCode Plugins
 
 - lit-plugin - Rune Mehlsen
-- PostCSS Language Support - csstools
 
 ## Todo
 
@@ -93,4 +92,3 @@ NOTE: Domain name config is repeated in a couple spots:
 
 - [Matt Waler](https://mattwaler.com/) for his [eleventy starter](https://github.com/mattwaler/tea-stack)
 
-- [Jim Nielsen](https://blog.jim-nielsen.com/2020/proptypes-outside-of-react-in-template-literal-components/) example of using prop-types in vanilla.js
