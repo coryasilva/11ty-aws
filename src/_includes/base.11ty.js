@@ -1,6 +1,6 @@
-const { html } = require('common-tags')
-const Footer = require('../_components/footer')
-const Header = require('../_components/header')
+import { html } from 'common-tags'
+import { Footer } from '../_components/footer.js'
+import { Header } from '../_components/header.js'
 
 class BasePage {
   render (data) {
@@ -57,11 +57,11 @@ class BasePage {
         ${content}
       </main>
       ${Footer({
-          content: html`${site.name}`,
+          children: html`${site.name}`,
       })}
     </body>
   </html>`
   }
 }
 
-module.exports = BasePage
+export default BasePage

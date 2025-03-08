@@ -1,20 +1,21 @@
-const { string, node } = require('prop-types')
-const { html } = require('common-tags')
-const { withPropTypeChecks } = require('../_utils')
+import { html } from 'common-tags'
+import { cn } from '../_utils/cn.js'
 
-Container.propTypes = {
-  classes: string,
-  element: string,
-  content: node,
-}
+/**
+ * @typedef {object} ContainerProps
+ * @property {string} [classNames]
+ * @property {string} [tag]
+ * @property {string} [children]
+ */
 
-function Container (props) {
-  const { classes = '', element = 'div', content = '' } = props
+/**
+ * @param {ContainerProps} props
+ */
+export function Container (props) {
+  const { classNames = '', tag = 'div', children = '' } = props
   return html`
-    <${element} class="container mx-auto max-w-5xl px-5 ${classes}">
-      ${content}
-    </${element}>
+    <${tag} class="${cn('container mx-auto max-w-5xl px-5', classNames)}">
+      ${children}
+    </${tag}>
   `
 }
-
-module.exports = withPropTypeChecks(Container)

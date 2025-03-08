@@ -1,7 +1,10 @@
-const htmlmin = require('html-minifier')
+import htmlmin from 'html-minifier'
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
-module.exports = function (config) {
+export default function (config) {
   config.addPassthroughCopy({ 'public': './' })
+
+  config.addPlugin(eleventyImageTransformPlugin)
 
   config.addTransform('htmlmin', function (content, outputPath) {
     if (

@@ -1,6 +1,6 @@
-const { html } = require('common-tags')
-const Container = require('./_components/container')
-const PageTitle = require('./_components/page-title')
+import { html } from 'common-tags'
+import { Container } from './_components/container.js'
+import { PageTitle } from './_components/page-title.js'
 
 class Index {
   data () {
@@ -17,7 +17,7 @@ class Index {
     return html`
       ${PageTitle({ title, subtitle: description, align: 'center' })}
       ${Container({
-        content: html`
+        children: html`
           <div class="flex flex-row justify-center">
             <div>
               <h2 class="text-3xl text-right font-bold">11ty</h2>
@@ -25,8 +25,7 @@ class Index {
                 <li>Tailwind CSS</li>
                 <li>Alpine JS</li>
                 <li>Template literals</li>
-                <li>prop-types</li>
-                <li>clsx</li>
+                <li>clsx + twmerge</li>
               </ul>
             </div>
             <div class="text-4xl shrink px-5 font-light">+</div>
@@ -49,4 +48,4 @@ class Index {
   }
 }
 
-module.exports = Index
+export default Index

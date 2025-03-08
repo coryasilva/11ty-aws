@@ -1,14 +1,16 @@
-const { string } = require('prop-types')
-const { html } = require('common-tags')
-const { withPropTypeChecks } = require('../_utils')
+import { html } from 'common-tags'
 
-NavItem.propTypes = {
-  url: string.isRequired,
-  text: string.isRequired,
-  currentUrl: string,
-}
+/**
+ * @typedef {object} NavItemProps
+ * @property {string} url
+ * @property {string} text
+ * @property {string} [currentUrl]
+ */
 
-function NavItem (props) {
+/**
+ * @param {NavItemProps} props
+ */
+export function NavItem (props) {
   const { url, text, currentUrl = '' } = props
   const active = currentUrl.includes(url)
 
@@ -21,4 +23,3 @@ function NavItem (props) {
   `
 }
 
-module.exports = withPropTypeChecks(NavItem)

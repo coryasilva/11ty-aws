@@ -1,5 +1,5 @@
-const Container = require('../_components/container')
-const PageTitle = require('../_components/page-title')
+import { Container } from '../_components/container.js'
+import { PageTitle } from '../_components/page-title.js'
 
 class Page {
   data () {
@@ -12,9 +12,9 @@ class Page {
     const { title, description, content } = data
     return `
       ${PageTitle({ title, subtitle: description })}
-      ${Container({ content })}
+      ${Container({ children: content })}
     `
   }
 }
 
-module.exports = Page
+export default Page

@@ -1,5 +1,5 @@
-const { stripIndent } = require('common-tags')
-const site = require('./_data/site')
+import { stripIndent } from 'common-tags'
+import site from './_data/site.js'
 
 class RobotsTxt {
   data () {
@@ -20,4 +20,4 @@ class RobotsTxt {
   }
 }
 
-module.exports = RobotsTxt
+export default RobotsTxt

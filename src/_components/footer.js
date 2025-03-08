@@ -1,22 +1,23 @@
-const { node } = require('prop-types')
-const { html } = require('common-tags')
-const { withPropTypeChecks } = require('../_utils')
-const Container = require('./container.js')
+import { html } from 'common-tags'
+import { Container } from './container.js'
 
-Footer.propTypes = {
-  content: node,
-}
+/**
+ * @typedef {object} FooterProps
+ * @property {string} [children]
+ */
 
-function Footer (props) {
+/**
+ * @param {FooterProps} props
+ */
+export function Footer (props) {
   return Container({
-    classes: 'py-5 mt-16',
-    element: 'footer',
-    content: html`
+    classNames: 'py-5 mt-16',
+    tag: 'footer',
+    children: html`
       <p class="block text-center text-sm text-gray-700">
-        ${props.content}
+        ${props.children}
       </p>
     `
   })
 }
 
-module.exports = withPropTypeChecks(Footer)
