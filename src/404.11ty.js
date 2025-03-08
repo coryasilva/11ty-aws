@@ -1,4 +1,4 @@
-const { html } = require('common-tags')
+import { html } from 'common-tags'
 
 class PageNotFound {
   data () {
@@ -18,4 +18,4 @@ class PageNotFound {
   }
 }
 
-module.exports = PageNotFound
+export default PageNotFound

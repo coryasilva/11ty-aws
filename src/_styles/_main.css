@@ -1,4 +1,6 @@
-/* Custom Base Styles Go Here. */
+@import "tailwindcss";
+
+/* Base */
 html, body {
   @apply antialiased text-gray-700 font-sans bg-gray-50;
 }

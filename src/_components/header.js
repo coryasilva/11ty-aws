@@ -1,20 +1,17 @@
-const { arrayOf, shape, string } = require('prop-types')
-const { html } = require('common-tags')
-const { withPropTypeChecks } = require('../_utils')
-const Container = require('./container.js')
-const NavItem = require('./nav-item.js')
+import { html } from 'common-tags'
+import { Container } from './container.js'
+import { NavItem } from './nav-item.js'
 
-Header.propTypes = {
-  navItems: arrayOf(
-    shape({
-      url: string.isRequired,
-      text: string.isRequired,
-    }).isRequired
-  ).isRequired,
-  currentUrl: string.isRequired
-}
+/**
+ * @typedef {object} HeaderProps
+ * @property {import('./nav-item.js').NavItemProps[]} navItems
+ * @property {string} currentUrl
+ */
 
-function Header (props) {
+/**
+ * @param {HeaderProps} props
+ */
+export function Header (props) {
   const { navItems, currentUrl } = props
   const content = html`
   <div>
@@ -46,5 +43,3 @@ function Header (props) {
   </header>
   `
 }
-
-module.exports = withPropTypeChecks(Header)

@@ -1,4 +1,4 @@
-const { stripIndent } = require('common-tags')
+import { stripIndent } from 'common-tags'
 
 class SitemapXml {
   data () {
@@ -26,4 +26,4 @@ class SitemapXml {
   }
 }
 
-module.exports = SitemapXml
+export default SitemapXml

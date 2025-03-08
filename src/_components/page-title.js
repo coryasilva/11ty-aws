@@ -1,23 +1,25 @@
-const { string, oneOf } = require('prop-types')
-const clsx = require('clsx')
-const { html } = require('common-tags')
-const { withPropTypeChecks } = require('../_utils')
-const Container = require('./container.js')
+import { html } from 'common-tags'
+import { Container } from './container.js'
+import { cn } from '../_utils/cn.js'
 
-PageTitle.propTypes = {
-  title: string.isRequired,
-  subtitle: string,
-  align: oneOf(['left', 'center', 'right']),
-}
+/**
+ * @typedef {object} PageTitleProps
+ * @property {string} title
+ * @property {string} [subtitle]
+ * @property {'left'|'center'|'right'} [align]
+ */
 
-function PageTitle (props) {
+/**
+ * @param {PageTitleProps} props
+ */
+export function PageTitle (props) {
   const { title, subtitle, align = 'left' } = props
-  const alignClass = clsx({
+  const alignClass = cn({
     'text-left': align === 'left',
     'text-center': align === 'center',
     'text-right': align === 'right'
   })
-  const content = html`
+  const children = html`
     <h1 class="font-extrabold text-4xl md:text-5xl leading-tight ${alignClass}">
       ${title}
     </h1>
@@ -28,9 +30,7 @@ function PageTitle (props) {
     `}
   `
   return Container({
-    classes: 'py-8 md:py-16',
-    content,
+    classNames: 'py-8 md:py-16',
+    children,
   })
 }
-
-module.exports = withPropTypeChecks(PageTitle)

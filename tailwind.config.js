@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   content: ['src/**/*.{js,md,njk,svg}'],
   safelist: [],
   theme: {
