@@ -1,21 +1,21 @@
-import { html } from 'common-tags'
-import { Container } from './_components/container.js'
-import { PageTitle } from './_components/page-title.js'
+import { html } from "common-tags";
+import { Container } from "./_components/container.js";
+import { PageTitle } from "./_components/page-title.js";
 
 class Index {
-  data () {
+  data() {
     return {
-      layout: 'base.11ty.js',
-      title: '11ty on AWS',
-      description: 'Because some of us just can\'t use netlify.',
-      permalink: '/',
-    }
+      layout: "base.11ty.js",
+      title: "11ty on AWS",
+      description: "Because some of us just can't use netlify.",
+      permalink: "/",
+    };
   }
 
-  render (data) {
-    const { title, description } = data
+  render(data) {
+    const { title, description } = data;
     return html`
-      ${PageTitle({ title, subtitle: description, align: 'center' })}
+      ${PageTitle({ title, subtitle: description, align: "center" })}
       ${Container({
         children: html`
           <div class="flex flex-row justify-center">
@@ -44,8 +44,8 @@ class Index {
           </div>
         `,
       })}
-    `
+    `;
   }
 }
 
-export default Index
+export default Index;

@@ -5,7 +5,7 @@ const kvs = cf.kvs(kvsId);
 
 async function handler(event) {
   const request = event.request;
-  const host = request.headers.host.value
+  const host = request.headers.host.value;
   const uriHasPeriod = request.uri.includes('.');
 
   // Redirect to canonical hostname
@@ -14,10 +14,10 @@ async function handler(event) {
       statusCode: 301,
       statusDescription: 'Found',
       headers: {
-        'location': { value: `https://${canonicalHost}${request.uri}` },
-        'cache-control': { value: 'max-age=300, s-maxage=86400' }
-      }
-    }
+        location: { value: `https://${canonicalHost}${request.uri}` },
+        'cache-control': { value: 'max-age=300, s-maxage=86400' },
+      },
+    };
   }
 
   // Do not modify requests to api (file extension okay here)
@@ -31,10 +31,10 @@ async function handler(event) {
       statusCode: 301,
       statusDescription: 'Found',
       headers: {
-        'location': { value: `https://${canonicalHost}${request.uri}/` },
-        'cache-control': { value: 'max-age=300, s-maxage=86400' }
-      }
-    }
+        location: { value: `https://${canonicalHost}${request.uri}/` },
+        'cache-control': { value: 'max-age=300, s-maxage=86400' },
+      },
+    };
   }
 
   // Force canonical paths
@@ -43,10 +43,12 @@ async function handler(event) {
       statusCode: 301,
       statusDescription: 'Found',
       headers: {
-        'location': { value: `https://${canonicalHost}${request.uri.substring(0, request.uri.length - 11)}/` },
-        'cache-control': { value: 'max-age=300, s-maxage=86400' }
-      }
-    }
+        location: {
+          value: `https://${canonicalHost}${request.uri.substring(0, request.uri.length - 11)}/`,
+        },
+        'cache-control': { value: 'max-age=300, s-maxage=86400' },
+      },
+    };
   }
 
   // Redirect if exists in kv
@@ -59,8 +61,8 @@ async function handler(event) {
           statusCode: '301',
           statusDescription: 'Found',
           headers: {
-            location: { value: redirect }
-          }
+            location: { value: redirect },
+          },
         };
       }
     } catch (error) {
@@ -72,5 +74,5 @@ async function handler(event) {
     request.uri += 'index.html';
   }
 
-  return request
+  return request;
 }

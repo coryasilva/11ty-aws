@@ -1,9 +1,9 @@
 module.exports = async () => {
   return {
     verbose: true,
-    testPathIgnorePatterns: ['cdk'],
+    testPathIgnorePatterns: ["cdk"],
     transform: {
-      '^.+\\.js?$': 'esbuild-jest',
-    }
-  }
-}
+      "^.+\\.js?$": "esbuild-jest",
+    },
+  };
+};

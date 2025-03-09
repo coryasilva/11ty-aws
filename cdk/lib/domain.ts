@@ -1,16 +1,19 @@
-import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager';
-import { Distribution } from 'aws-cdk-lib/aws-cloudfront';
+import {
+  Certificate,
+  CertificateValidation,
+} from "aws-cdk-lib/aws-certificatemanager";
+import type { Distribution } from "aws-cdk-lib/aws-cloudfront";
 import {
   ARecord,
-  ARecordProps,
+  type ARecordProps,
   AaaaRecord,
-  AaaaRecordProps,
+  type AaaaRecordProps,
   HostedZone,
-  IHostedZone,
+  type IHostedZone,
   RecordTarget,
-} from 'aws-cdk-lib/aws-route53';
-import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
-import { Construct } from 'constructs';
+} from "aws-cdk-lib/aws-route53";
+import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
+import { Construct } from "constructs";
 
 export interface DomainProps {
   readonly domainName: string;
@@ -37,14 +40,14 @@ export class Domain extends Construct {
   }
 
   private getHostedZone() {
-    const domainName = this.props.domainName.split('.').slice(1).join('.')
-    return HostedZone.fromLookup(this, 'HostedZone', {
+    const domainName = this.props.domainName.split(".").slice(1).join(".");
+    return HostedZone.fromLookup(this, "HostedZone", {
       domainName,
     });
   }
 
   private createCertificate() {
-    return new Certificate(this, 'Certificate', {
+    return new Certificate(this, "Certificate", {
       domainName: this.props.domainName,
       subjectAlternativeNames: this.props.subjectAlternativeNames,
       validation: CertificateValidation.fromDns(this.hostedZone),
@@ -58,21 +61,21 @@ export class Domain extends Construct {
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     };
 
-    new ARecord(this, 'ARecordMain', {
+    new ARecord(this, "ARecordMain", {
       ...recordProps,
     });
-    new AaaaRecord(this, 'AaaaRecordMain', {
+    new AaaaRecord(this, "AaaaRecordMain", {
       ...recordProps,
     });
 
     if (this.props.subjectAlternativeNames?.length) {
       let i = 1;
       for (const alternateName of this.props.subjectAlternativeNames) {
-        new ARecord(this, 'ARecordAlt' + i, {
+        new ARecord(this, `ARecordAlt${i}`, {
           ...recordProps,
           recordName: `${alternateName}.`,
         });
-        new AaaaRecord(this, 'AaaaRecordAlt' + i, {
+        new AaaaRecord(this, `AaaaRecordAlt${i}`, {
           ...recordProps,
           recordName: `${alternateName}.`,
         });

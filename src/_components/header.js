@@ -1,6 +1,6 @@
-import { html } from 'common-tags'
-import { Container } from './container.js'
-import { NavItem } from './nav-item.js'
+import { html } from "common-tags";
+import { Container } from "./container.js";
+import { NavItem } from "./nav-item.js";
 
 /**
  * @typedef {object} HeaderProps
@@ -11,8 +11,8 @@ import { NavItem } from './nav-item.js'
 /**
  * @param {HeaderProps} props
  */
-export function Header (props) {
-  const { navItems, currentUrl } = props
+export function Header(props) {
+  const { navItems, currentUrl } = props;
   const content = html`
   <div>
       <a href="/" alt="11ty-aws" class="text-gray-700 hover:text-gray-900 focus-visible:text-gray-900 inline-block transition-colors focus:outline-none">
@@ -29,17 +29,17 @@ export function Header (props) {
             currentUrl,
           })}
         </li>
-      `
+      `;
     })}
   </ul>
-  `
+  `;
   return html`
   <header>
     ${Container({
-      classes: 'pt-4 pb-2 flex flex-wrap justify-between',
-      element: 'nav',
+      classes: "pt-4 pb-2 flex flex-wrap justify-between",
+      element: "nav",
       content,
     })}
   </header>
-  `
+  `;
 }
