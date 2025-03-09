@@ -1,1 +1,1 @@
-import './alpine.js'
+import "./alpine.js";

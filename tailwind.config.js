@@ -1,8 +1,8 @@
 export default {
-  content: ['src/**/*.{js,md,njk,svg}'],
+  content: ["src/**/*.{js,md,njk,svg}"],
   safelist: [],
   theme: {
-    extend: {}
+    extend: {},
   },
   plugins: [],
-}
+};

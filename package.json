@@ -27,7 +27,7 @@
     "dev:css": "npx @tailwindcss/cli -i $npm_package_config_css_in -o $npm_package_config_css_out --watch",
     "dev:js": "esbuild $npm_package_config_js_in --outfile=$npm_package_config_js_out --bundle --watch",
     "dev:test": "npx jest --watch --passWithNoTests",
-    "lint": "npx eslint .",
+    "lint": "npx biome check .",
     "start": "npm run dev"
   },
   "dependencies": {
@@ -36,17 +36,13 @@
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@11ty/eleventy-img": "^6.0.1",
+    "@biomejs/biome": "1.9.4",
     "@tailwindcss/cli": "^4.0.12",
     "clsx": "^2.1.1",
     "common-tags": "^1.8.2",
     "cross-env": "^7.0.3",
     "esbuild": "^0.25.0",
     "esbuild-jest": "^0.5.0",
-    "eslint": "^8.34.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
     "html-minifier": "^4.0.0",
     "jest": "^29.7.0",
     "npm-run-all": "^4.1.5",

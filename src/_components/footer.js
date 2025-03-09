@@ -1,5 +1,5 @@
-import { html } from 'common-tags'
-import { Container } from './container.js'
+import { html } from "common-tags";
+import { Container } from "./container.js";
 
 /**
  * @typedef {object} FooterProps
@@ -9,14 +9,14 @@ import { Container } from './container.js'
 /**
  * @param {FooterProps} props
  */
-export function Footer (props) {
+export function Footer(props) {
   return Container({
-    classNames: 'py-5 mt-16',
-    tag: 'footer',
+    classNames: "py-5 mt-16",
+    tag: "footer",
     children: html`
       <p class="block text-center text-sm text-gray-700">
         ${props.children}
       </p>
-    `
-  })
+    `,
+  });
 }

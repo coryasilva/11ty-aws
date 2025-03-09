@@ -1,5 +1,5 @@
-import { html } from 'common-tags'
-import { cn } from '../_utils/cn.js'
+import { html } from "common-tags";
+import { cn } from "../_utils/cn.js";
 
 /**
  * @typedef {object} ContainerProps
@@ -11,11 +11,11 @@ import { cn } from '../_utils/cn.js'
 /**
  * @param {ContainerProps} props
  */
-export function Container (props) {
-  const { classNames = '', tag = 'div', children = '' } = props
+export function Container(props) {
+  const { classNames = "", tag = "div", children = "" } = props;
   return html`
-    <${tag} class="${cn('container mx-auto max-w-5xl px-5', classNames)}">
+    <${tag} class="${cn("container mx-auto max-w-5xl px-5", classNames)}">
       ${children}
     </${tag}>
-  `
+  `;
 }

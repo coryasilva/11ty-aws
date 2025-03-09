@@ -1,21 +1,21 @@
-import { html } from 'common-tags'
-import { Footer } from '../_components/footer.js'
-import { Header } from '../_components/header.js'
+import { html } from "common-tags";
+import { Footer } from "../_components/footer.js";
+import { Header } from "../_components/header.js";
 
 class BasePage {
-  render (data) {
+  render(data) {
     const {
-      seoTitle = '',
-      title = '',
-      seoDescription = '',
-      description = '',
+      seoTitle = "",
+      title = "",
+      seoDescription = "",
+      description = "",
       site,
       page,
       menu,
       content,
-    } = data
-    const _title = `${seoTitle || title} | ${site.name}`
-    const _description = `${seoDescription || description || site.description}`
+    } = data;
+    const _title = `${seoTitle || title} | ${site.name}`;
+    const _description = `${seoDescription || description || site.description}`;
 
     return html`<!DOCTYPE html>
   <html lang="en">
@@ -57,11 +57,11 @@ class BasePage {
         ${content}
       </main>
       ${Footer({
-          children: html`${site.name}`,
+        children: html`${site.name}`,
       })}
     </body>
-  </html>`
+  </html>`;
   }
 }
 
-export default BasePage
+export default BasePage;

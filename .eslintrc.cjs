@@ -4,15 +4,13 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: [
-    'standard',
-  ],
+  extends: ["standard"],
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  ignorePatterns: ['dist/**/*', 'cdk/cdk.out/**/*', 'cloudfront'],
+  ignorePatterns: ["dist/**/*", "cdk/cdk.out/**/*", "cloudfront"],
   rules: {
-    'comma-dangle': ['error', 'only-multiline'],
+    "comma-dangle": ["error", "only-multiline"],
   },
-}
+};

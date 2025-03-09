@@ -1,31 +1,31 @@
-import htmlmin from 'html-minifier'
-import { eleventyImageTransformPlugin } from '@11ty/eleventy-img'
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import htmlmin from "html-minifier";
 
 export default function (config) {
-  config.addPassthroughCopy({ public: './' })
+  config.addPassthroughCopy({ public: "./" });
 
-  config.addPlugin(eleventyImageTransformPlugin)
+  config.addPlugin(eleventyImageTransformPlugin);
 
-  config.addTransform('htmlmin', function (content, outputPath) {
+  config.addTransform("htmlmin", (content, outputPath) => {
     if (
       process.env.ELEVENTY_PRODUCTION &&
       outputPath &&
-      outputPath.endsWith('.html')
+      outputPath.endsWith(".html")
     ) {
       const minified = htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true,
-      })
-      return minified
+      });
+      return minified;
     }
-    return content
-  })
+    return content;
+  });
 
   return {
     dir: {
-      input: 'src',
-      output: 'dist',
+      input: "src",
+      output: "dist",
     },
-  }
+  };
 }
