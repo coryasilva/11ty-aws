@@ -13,7 +13,7 @@ import { NavItem } from "./nav-item.js";
  */
 export function Header(props) {
   const { navItems, currentUrl } = props;
-  const content = html`
+  const children = html`
   <div>
       <a href="/" alt="11ty-aws" class="text-gray-700 hover:text-gray-900 focus-visible:text-gray-900 inline-block transition-colors focus:outline-none">
       11ty-aws
@@ -36,9 +36,9 @@ export function Header(props) {
   return html`
   <header>
     ${Container({
-      classes: "pt-4 pb-2 flex flex-wrap justify-between",
-      element: "nav",
-      content,
+      classNames: "pt-4 pb-2 flex flex-wrap justify-between",
+      tag: "nav",
+      children,
     })}
   </header>
   `;

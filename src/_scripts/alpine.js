@@ -1,6 +1,7 @@
 import Alpine from "alpinejs";
 // import dropdown from './dropdown'
 
+// @ts-expect-error
 window.Alpine = Alpine;
 
 // Start Alpine when the page is ready.

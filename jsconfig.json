@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2022",
+    "moduleResolution": "Bundler",
+    "checkJs": true
+  }
+}
