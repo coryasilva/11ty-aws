@@ -1,10 +1,10 @@
 # 11ty-aws
 
-11ty + Alpine + Tailwind on AWS.
+11ty + Alpine + Tailwind in AWS.
 
 Full stack javascript with very little context switching.
 
-Yes, using Netlify is much eaiser and requires far less code, but some enterprises will not want to use Netilfy. Also, nontrivial sites will quickly need to have some APIs -- this stack uses cloudfront as an unified ingress for both the static site and the API Gateway.
+Yes, using Netlify is much easier and requires far less code, but some enterprises will not want to use Netilfy or you may just have other assets already in AWS.
 
 ## Getting Started
 
@@ -73,10 +73,6 @@ NOTE: Domain name config is repeated in a couple spots:
 ├── package.json
 └── tailwind.config.js # Tailwind CSS configurations (design tokens)
 ```
-
-### Suggested VSCode Plugins
-
-- lit-plugin - Rune Mehlsen
 
 ## Todo
 

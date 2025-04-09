@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
-/* Base */
-html,
-body {
-  @apply antialiased text-gray-700 font-sans bg-gray-50;
+@theme {
+  --color-primary-500: oklch(0.72 0.11 178);
 }
 
-/* This allows you to hide Alpine DOM until it's ready to go. */
-[x-cloak] {
-  @apply hidden;
+@layer base {
+  html,
+  body {
+    @apply antialiased text-gray-700 font-sans bg-gray-50;
+  }
+
+  /* This allows you to hide Alpine DOM until it's ready to go. */
+  [x-cloak] {
+    @apply hidden;
+  }
 }

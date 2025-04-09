@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "bradlc.vscode-tailwindcss",
+        "bierner.lit-html",
+        "editorconfig.editorconfig",
+        "biomejs.biome"
+    ]
+}
